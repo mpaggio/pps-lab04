@@ -5,7 +5,7 @@ package it.unibo.pps.tasks.adts
  *  the test in ComplexTest.
  */
 
-object Ex1ComplexNumbers:
+object Ex1ComplexNumber:
 
   trait ComplexADT:
     type Complex
@@ -18,13 +18,21 @@ object Ex1ComplexNumbers:
       def asString(): String
 
   object BasicComplexADT extends ComplexADT:
-
+    case class ComplexNumber(re: Double, im: Double)
     // Change assignment below: should probably define a case class and use it?
-    type Complex = Nothing 
-    def complex(re: Double, im: Double): Complex = ???
+    type Complex = ComplexNumber
+    def complex(re: Double, im: Double): Complex = ComplexNumber(re, im)
     extension (complex: Complex)
-      def re(): Double = ???
-      def im(): Double = ???
-      def sum(other: Complex): Complex = ???
-      def subtract(other: Complex): Complex = ???
-      def asString(): String = ???
+      def re(): Double = complex match
+        case ComplexNumber(r, i) => r
+      def im(): Double = complex match
+        case ComplexNumber(r, i) => i
+      def sum(other: Complex): Complex = (complex, other) match
+        case (ComplexNumber(r1, i1), ComplexNumber(r2, i2)) => ComplexNumber(r1 + r2, i1 + i2)
+      def subtract(other: Complex): Complex = (complex, other) match
+        case (ComplexNumber(r1, i1), ComplexNumber(r2, i2)) => ComplexNumber(r1 - r2, i1 - i2)
+      def asString(): String = complex match
+        case ComplexNumber(r, i) if i == 0 => s"$r"
+        case ComplexNumber(r, i) if r == 0 => s"${i}i"
+        case ComplexNumber(r, i) if i > 0 => s"$r + ${i}i"
+        case ComplexNumber(r, i) => s"$r - ${-i}i"
