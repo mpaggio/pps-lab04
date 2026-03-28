@@ -127,8 +127,8 @@ object SchoolModel:
       def teachers: Sequence[String] = fromSequence(school.map((t,_) => t)).toSequence()
       def setTeacherToCourse(teacher: Teacher, course: Course): School = Cons((teacher, course), school)
       def coursesOfATeacher(teacher: Teacher): Sequence[Course] = school.filter((t,c) => t == teacher).map((_,c) => c)
-      def hasTeacher(name: String): Boolean = school.teachers.filter(_ == name) != Nil()
-      def hasCourse(name: String): Boolean = school.courses.filter(_ == name) != Nil()
+      def hasTeacher(name: String): Boolean = teachers.filter(_ == name) != Nil()
+      def hasCourse(name: String): Boolean = courses.filter(_ == name) != Nil()
 
 @main def examples(): Unit =
   import SchoolModel.BasicSchoolModule.*
